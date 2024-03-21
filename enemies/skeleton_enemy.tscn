@@ -1,0 +1,153 @@
+[gd_scene load_steps=21 format=3 uid="uid://c83dia1vceb16"]
+
+[ext_resource type="Texture2D" uid="uid://bqix52eakw3sw" path="res://Skeleton enemy/Skeleton enemy.png" id="1_ncp81"]
+[ext_resource type="Script" path="res://enemies/skeleton_enemy.gd" id="1_tre1t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_meyy8"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1owby"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rt62c"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_caohy"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(192, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcoda"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8el2"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cpx2"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_otvtc"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5abv7"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(256, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_alkvx"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(320, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4v7ly"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(384, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nt077"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(448, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypk7v"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(512, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2hnm"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(576, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n261t"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(640, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uj2qq"]
+atlas = ExtResource("1_ncp81")
+region = Rect2(704, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nrxow"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_meyy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1owby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rt62c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_caohy")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcoda")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m8el2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2cpx2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_otvtc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5abv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_alkvx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4v7ly")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nt077")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypk7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2hnm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n261t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uj2qq")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dnyh3"]
+radius = 12.0
+height = 36.0
+
+[node name="skeletonEnemy" type="CharacterBody2D"]
+position = Vector2(0, 1)
+script = ExtResource("1_tre1t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -17)
+sprite_frames = SubResource("SpriteFrames_nrxow")
+animation = &"Idle"
+autoplay = "Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -19)
+shape = SubResource("CapsuleShape2D_dnyh3")
+debug_color = Color(0.772549, 0.270588, 0.866667, 0.419608)
