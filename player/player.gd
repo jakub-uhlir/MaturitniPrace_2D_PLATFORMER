@@ -1,7 +1,5 @@
 extends CharacterBody2D
 @onready var animated_sprite_2d = $AnimatedSprite2D
-
-
 const GRAVITY = 2000
 const SPEED = 1000
 @export var max_horizontal_speed: int = 300
@@ -11,18 +9,18 @@ const jump_speed = -430
 const jump_horizontal_speed = 1000
 @export var max_jump_horizontal_speed: int = 300
 
-const roll_speed = 2000
+const roll_speed = 1.05
 const roll_duration = 0.3
-const roll_cooldown = 0.5
+const roll_cooldown = 0.1
 var can_roll = true
 
 enum State {Idle, Run, Roll, Jump, Attack, aerialAttack, Falling}
 var current_state
-func _ready():
+func _ready(): #create event
 	current_state = State.Idle
 
-func _physics_process(delta):
-	
+func _physics_process(delta): #step event (60 fps)
+	var direction = Input.get_axis("move_left", "move_right")
 	if current_state != State.Attack and current_state != State.Roll:
 		
 		player_falling(delta)
@@ -31,6 +29,10 @@ func _physics_process(delta):
 		
 		player_attack(delta)
 		move_and_slide()
+	if current_state == State.Roll:
+		player_roll(delta, direction)
+		move_and_slide()
+		
 	if current_state == State.aerialAttack:
 		player_falling(delta)
 		move_and_slide()
@@ -40,10 +42,14 @@ func _physics_process(delta):
 		player_jump(delta)
 		move_and_slide()
 	
-	if Input.is_action_just_pressed("roll"):
+	if Input.is_action_just_pressed("roll") and can_roll and direction !=0:
 		print("roll pressed")
-		player_roll(delta)
-		move_and_slide()
+		current_state = State.Roll
+		can_roll = false;
+		await(get_tree().create_timer(roll_duration).timeout)
+		current_state = State.Idle
+		can_roll = true
+		
 		
 	player_animations()
 	
@@ -97,31 +103,18 @@ func player_attack(delta):
 		current_state = State.Falling
 		
 
-func player_roll(delta):
-	var direction = Input.get_axis("move_left", "move_right")
-	
-	if  direction !=0 and can_roll == true:
-		
-		current_state = State.Roll
-		can_roll = false
-		velocity.x = move_toward(velocity.x, direction * roll_speed, roll_speed)
-		print(velocity.x)
-		animated_sprite_2d.play("Dash")
-		
-		print("rolled")
-		await(animated_sprite_2d.animation_finished)
-		velocity.x = 0
-		current_state = State.Idle
-		await(get_tree().create_timer(roll_cooldown).timeout)
-		can_roll = true
-		print("can roll again")
+func player_roll(delta, direction):
+	#AddCollisionExceptionWith()
+	velocity.x = move_toward(velocity.x, velocity.x+500*direction, delta) * roll_speed
+	print(velocity.x)
+	print("rolled")
 	
 func player_animations(): 
 	if current_state == State.Idle:
 		animated_sprite_2d.play("Idle")
-	elif current_state == State.Run:
+	elif current_state == State.Run and is_on_floor():
 		animated_sprite_2d.play("Run")
 	elif current_state == State.Jump:
 		animated_sprite_2d.play("Jump")
-	
-	
+	elif current_state == State.Roll:
+		animated_sprite_2d.play("Dash")
