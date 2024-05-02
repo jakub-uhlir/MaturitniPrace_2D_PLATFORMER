@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dklflujlnaka3"]
+
+[ext_resource type="Texture2D" uid="uid://co1rio68xpad1" path="res://textures/died_text.png" id="1_pe0oc"]
+
+[node name="YouDied" type="TextureRect"]
+offset_right = 258.0
+offset_bottom = 48.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_pe0oc")

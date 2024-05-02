@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://lh0htqe7uiok"]
+
+[ext_resource type="Texture2D" uid="uid://cvrjhmsquoxm5" path="res://UI/potion.png" id="1_0ms6x"]
+
+[node name="Potion" type="Node2D"]
+
+[node name="PotionSprite" type="Sprite2D" parent="."]
+position = Vector2(4.76837e-07, 4.76837e-07)
+scale = Vector2(0.079365, 0.079365)
+texture = ExtResource("1_0ms6x")
+centered = false

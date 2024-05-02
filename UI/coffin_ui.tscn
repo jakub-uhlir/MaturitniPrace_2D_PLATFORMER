@@ -1,0 +1,147 @@
+[gd_scene load_steps=9 format=3 uid="uid://pc0vfr35ctq8"]
+
+[ext_resource type="Texture2D" uid="uid://iu0kv6mvsevo" path="res://UI/Coffin/background_ui.png" id="1_cn0k6"]
+[ext_resource type="Texture2D" uid="uid://c3yon3toda3c7" path="res://UI/Coffin/level_button_ui.png" id="2_e770p"]
+[ext_resource type="Texture2D" uid="uid://dhkfcvd3fodpu" path="res://UI/Coffin/button_ui.png" id="2_eafh6"]
+[ext_resource type="Texture2D" uid="uid://cmkq1h4hyo4yi" path="res://UI/Coffin/teleport_button_ui.png" id="3_igpm8"]
+[ext_resource type="Texture2D" uid="uid://deef34uw7plls" path="res://UI/Coffin/exit_button_ui.png" id="5_nc8r8"]
+[ext_resource type="Texture2D" uid="uid://cpjxfihqakhxp" path="res://UI/Coffin/strength_button.png" id="6_vf71f"]
+[ext_resource type="Texture2D" uid="uid://cadon63xw78ju" path="res://UI/Coffin/hp_buttob_ui.png" id="7_e3xvb"]
+[ext_resource type="Texture2D" uid="uid://bta8opebsppwm" path="res://UI/Coffin/focus_button_texture.png" id="8_i8l4l"]
+
+[node name="CoffinUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CoffinMenu" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -68.0
+offset_right = 47.5
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_cn0k6")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CoffinMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.5
+offset_top = 31.0
+offset_right = 22.5
+offset_bottom = 81.0
+grow_horizontal = 2
+
+[node name="LevelUpButton" type="TextureButton" parent="CoffinMenu/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_e770p")
+
+[node name="TeleportButton" type="TextureButton" parent="CoffinMenu/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_igpm8")
+
+[node name="TextureButton" type="TextureButton" parent="CoffinMenu/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_eafh6")
+stretch_mode = 0
+
+[node name="ExitButton" type="TextureButton" parent="CoffinMenu"]
+layout_mode = 0
+offset_left = 79.5
+offset_right = 94.5
+offset_bottom = 15.0
+texture_normal = ExtResource("5_nc8r8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="LevelUpMenu" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -65.0
+offset_right = 50.0
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_cn0k6")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="ExitButton" type="TextureButton" parent="LevelUpMenu"]
+layout_mode = 0
+offset_left = 79.5
+offset_right = 94.5
+offset_bottom = 15.0
+texture_normal = ExtResource("5_nc8r8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StrengthButton" type="TextureButton" parent="LevelUpMenu"]
+layout_mode = 2
+offset_left = 14.0
+offset_top = 25.0
+offset_right = 59.0
+offset_bottom = 51.0
+texture_normal = ExtResource("6_vf71f")
+
+[node name="StrengthStatNumber" type="Label" parent="LevelUpMenu/StrengthButton"]
+layout_mode = 2
+offset_left = 51.0
+offset_top = -5.0
+offset_right = 61.0
+offset_bottom = 21.0
+text = "0"
+
+[node name="HpButton" type="TextureButton" parent="LevelUpMenu"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 45.0
+offset_right = 59.0
+offset_bottom = 85.0
+texture_normal = ExtResource("7_e3xvb")
+
+[node name="HpStatNumber" type="Label" parent="LevelUpMenu/HpButton"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -5.0
+offset_right = 61.0
+offset_bottom = 21.0
+text = "0"
+
+[node name="FocusButton" type="TextureButton" parent="LevelUpMenu"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 66.0
+offset_right = 59.0
+offset_bottom = 106.0
+texture_normal = ExtResource("8_i8l4l")
+
+[node name="FocusStatNumber" type="Label" parent="LevelUpMenu/FocusButton"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -5.0
+offset_right = 61.0
+offset_bottom = 21.0
+text = "0"

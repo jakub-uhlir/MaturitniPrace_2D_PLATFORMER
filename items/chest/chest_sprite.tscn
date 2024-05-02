@@ -1,0 +1,103 @@
+[gd_scene load_steps=12 format=3 uid="uid://cklria2o1sa85"]
+
+[ext_resource type="Texture2D" uid="uid://dwoyejejk4n2k" path="res://items/chest/Wooden Chest 1 -  Spritesheet.png" id="1_l8gov"]
+[ext_resource type="Texture2D" uid="uid://lnujuim377ey" path="res://items/chest/open_button.png" id="2_cw21h"]
+[ext_resource type="Script" path="res://items/chest/chest_sprite.gd" id="2_ibnmb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kb1cr"]
+atlas = ExtResource("1_l8gov")
+region = Rect2(0, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6q6m"]
+atlas = ExtResource("1_l8gov")
+region = Rect2(192, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lw8mu"]
+atlas = ExtResource("1_l8gov")
+region = Rect2(48, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ed0p3"]
+atlas = ExtResource("1_l8gov")
+region = Rect2(96, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4jok"]
+atlas = ExtResource("1_l8gov")
+region = Rect2(144, 0, 48, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ml1j2"]
+atlas = ExtResource("1_l8gov")
+region = Rect2(192, 0, 48, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_176my"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kb1cr")
+}],
+"loop": true,
+"name": &"Closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6q6m")
+}],
+"loop": true,
+"name": &"Opened",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lw8mu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ed0p3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4jok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ml1j2")
+}],
+"loop": false,
+"name": &"Openening",
+"speed": 6.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvrgs"]
+size = Vector2(121, 52)
+
+[node name="ChestSprite" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_176my")
+animation = &"Openening"
+frame = 3
+frame_progress = 1.0
+script = ExtResource("2_ibnmb")
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="detect_collision" type="CollisionShape2D" parent="DetectArea"]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_hvrgs")
+debug_color = Color(0, 0.631373, 0.45098, 0.419608)
+
+[node name="OpenButton" type="TextureButton" parent="."]
+visible = false
+offset_left = -17.0
+offset_top = -31.0
+offset_right = 18.0
+offset_bottom = -20.0
+texture_normal = ExtResource("2_cw21h")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="area_entered" from="DetectArea" to="." method="_on_detect_area_area_entered"]
+[connection signal="area_exited" from="DetectArea" to="." method="_on_detect_area_area_exited"]
+[connection signal="pressed" from="OpenButton" to="." method="_on_open_button_pressed"]

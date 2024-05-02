@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://b82hckay17v3e"]
+
+[ext_resource type="Texture2D" uid="uid://cv8hdvfvejmjx" path="res://effects/fire_effects/Yellow Effect Bullet Impact Explosion 32x32.png" id="1_58dcm"]
+[ext_resource type="Script" path="res://effects/parry_effect.gd" id="2_m4lwm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2xvs"]
+atlas = ExtResource("1_58dcm")
+region = Rect2(544, 352, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kaj5l"]
+atlas = ExtResource("1_58dcm")
+region = Rect2(576, 352, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyrp2"]
+atlas = ExtResource("1_58dcm")
+region = Rect2(608, 352, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jvl6a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2xvs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kaj5l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kyrp2")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"ParryEffect",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ParryEffect" type="AnimatedSprite2D"]
+z_index = 1
+scale = Vector2(1.6875, 1.625)
+sprite_frames = SubResource("SpriteFrames_jvl6a")
+animation = &"ParryEffect"
+autoplay = "ParryEffect"
+frame = 3
+frame_progress = 1.0
+script = ExtResource("2_m4lwm")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

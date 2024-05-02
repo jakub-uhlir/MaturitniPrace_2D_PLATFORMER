@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcihvm5gywer6"]
+
+[ext_resource type="Script" path="res://UI/main_screen/main_screen.gd" id="1_wayt3"]
+[ext_resource type="Texture2D" uid="uid://cvxbgv7n0o3r7" path="res://UI/mainscreen_background.png" id="1_x4sgy"]
+[ext_resource type="Texture2D" uid="uid://712bai5umeuh" path="res://UI/main_screen/play_button_texture.png" id="3_t5frc"]
+[ext_resource type="Texture2D" uid="uid://cnw0450jm44mt" path="res://UI/main_screen/exit_button_texture.png" id="4_d326u"]
+
+[node name="main_screen" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wayt3")
+
+[node name="screen_background" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -107.0
+offset_right = 192.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_x4sgy")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+modulate = Color(0.980392, 0.321569, 0.270588, 0)
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.5
+offset_top = -16.0
+offset_right = 22.5
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="play_button" type="TextureButton" parent="ButtonContainer"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("3_t5frc")
+
+[node name="exit_button" type="TextureButton" parent="ButtonContainer"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_d326u")
+
+[connection signal="pressed" from="ButtonContainer/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/exit_button" to="." method="_on_exit_button_pressed"]

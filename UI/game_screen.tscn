@@ -1,0 +1,192 @@
+[gd_scene load_steps=14 format=3 uid="uid://dt4l3holt2grc"]
+
+[ext_resource type="PackedScene" uid="uid://cjxuwmchi7ws8" path="res://UI/Healthbar/health_bar.tscn" id="1_l2t0k"]
+[ext_resource type="Script" path="res://UI/game_screen.gd" id="1_t18mr"]
+[ext_resource type="PackedScene" uid="uid://lh0htqe7uiok" path="res://UI/potion.tscn" id="2_e673l"]
+[ext_resource type="PackedScene" uid="uid://dklflujlnaka3" path="res://textures/you_died.tscn" id="4_h7q65"]
+[ext_resource type="Texture2D" uid="uid://iu0kv6mvsevo" path="res://UI/Coffin/background_ui.png" id="5_polsy"]
+[ext_resource type="Texture2D" uid="uid://dhkfcvd3fodpu" path="res://UI/Coffin/button_ui.png" id="6_cqauo"]
+[ext_resource type="Texture2D" uid="uid://c3yon3toda3c7" path="res://UI/Coffin/level_button_ui.png" id="6_fgh1g"]
+[ext_resource type="Texture2D" uid="uid://cmkq1h4hyo4yi" path="res://UI/Coffin/teleport_button_ui.png" id="7_1scgf"]
+[ext_resource type="Texture2D" uid="uid://deef34uw7plls" path="res://UI/Coffin/exit_button_ui.png" id="9_gccla"]
+[ext_resource type="Texture2D" uid="uid://cpjxfihqakhxp" path="res://UI/Coffin/strength_button.png" id="10_g0yp2"]
+[ext_resource type="Texture2D" uid="uid://cadon63xw78ju" path="res://UI/Coffin/hp_buttob_ui.png" id="11_im1ly"]
+[ext_resource type="Texture2D" uid="uid://bta8opebsppwm" path="res://UI/Coffin/focus_button_texture.png" id="12_eegxg"]
+[ext_resource type="Texture2D" uid="uid://dqowxmub3gduo" path="res://UI/souls_counter_background.png" id="13_pslik"]
+
+[node name="GameScreen" type="CanvasLayer"]
+script = ExtResource("1_t18mr")
+
+[node name="HealthBar" parent="." instance=ExtResource("1_l2t0k")]
+
+[node name="Potion" parent="." instance=ExtResource("2_e673l")]
+position = Vector2(9, 17)
+
+[node name="PotionNumber" type="Label" parent="Potion"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 20.0
+offset_bottom = 33.0
+
+[node name="YouDied" parent="." instance=ExtResource("4_h7q65")]
+visible = false
+z_index = 2
+offset_left = 128.0
+offset_top = 88.0
+offset_right = 386.0
+offset_bottom = 136.0
+
+[node name="Loadscreen" type="ColorRect" parent="."]
+visible = false
+modulate = Color(0.901961, 0.901961, 0.901961, 1)
+offset_right = 384.0
+offset_bottom = 216.0
+color = Color(0.109804, 0.109804, 0.109804, 0.392157)
+
+[node name="CoffinMenu" type="NinePatchRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.5
+offset_top = -68.0
+offset_right = 47.5
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_polsy")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CoffinMenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.5
+offset_top = 31.0
+offset_right = 22.5
+offset_bottom = 81.0
+grow_horizontal = 2
+
+[node name="LevelUpButton" type="TextureButton" parent="CoffinMenu/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_fgh1g")
+
+[node name="TeleportButton" type="TextureButton" parent="CoffinMenu/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("7_1scgf")
+
+[node name="TextureButton" type="TextureButton" parent="CoffinMenu/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_cqauo")
+stretch_mode = 0
+
+[node name="ExitButton" type="TextureButton" parent="CoffinMenu"]
+layout_mode = 0
+offset_left = 79.5
+offset_right = 94.5
+offset_bottom = 15.0
+texture_normal = ExtResource("9_gccla")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="LevelUpMenu" type="NinePatchRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -68.0
+offset_right = 48.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_polsy")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
+
+[node name="ExitButton2" type="TextureButton" parent="LevelUpMenu"]
+layout_mode = 0
+offset_left = 79.5
+offset_right = 94.5
+offset_bottom = 15.0
+texture_normal = ExtResource("9_gccla")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="StrengthButton" type="TextureButton" parent="LevelUpMenu"]
+layout_mode = 2
+offset_left = 14.0
+offset_top = 25.0
+offset_right = 59.0
+offset_bottom = 51.0
+texture_normal = ExtResource("10_g0yp2")
+
+[node name="StrengthStatNumber" type="Label" parent="LevelUpMenu/StrengthButton"]
+layout_mode = 2
+offset_left = 51.0
+offset_top = -5.0
+offset_right = 61.0
+offset_bottom = 21.0
+text = "0"
+
+[node name="HpButton" type="TextureButton" parent="LevelUpMenu"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 45.0
+offset_right = 59.0
+offset_bottom = 85.0
+texture_normal = ExtResource("11_im1ly")
+
+[node name="HpStatNumber" type="Label" parent="LevelUpMenu/HpButton"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -5.0
+offset_right = 61.0
+offset_bottom = 21.0
+text = "0"
+
+[node name="FocusButton" type="TextureButton" parent="LevelUpMenu"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 66.0
+offset_right = 59.0
+offset_bottom = 106.0
+texture_normal = ExtResource("12_eegxg")
+
+[node name="FocusStatNumber" type="Label" parent="LevelUpMenu/FocusButton"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = -5.0
+offset_right = 61.0
+offset_bottom = 21.0
+text = "0"
+
+[node name="SoulsCounterBackground" type="TextureRect" parent="."]
+offset_left = 322.0
+offset_top = 187.0
+offset_right = 378.0
+offset_bottom = 211.0
+texture = ExtResource("13_pslik")
+
+[node name="SoulsCounterNumber" type="Label" parent="SoulsCounterBackground"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 51.0
+offset_bottom = 23.0
+
+[connection signal="pressed" from="CoffinMenu/VBoxContainer/LevelUpButton" to="." method="_on_level_up_button_pressed"]
+[connection signal="pressed" from="CoffinMenu/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="LevelUpMenu/ExitButton2" to="." method="_on_exit_button_2_pressed"]
+[connection signal="pressed" from="LevelUpMenu/StrengthButton" to="." method="_on_strength_button_pressed"]
+[connection signal="pressed" from="LevelUpMenu/HpButton" to="." method="_on_hp_button_pressed"]
+[connection signal="pressed" from="LevelUpMenu/FocusButton" to="." method="_on_focus_button_pressed"]
