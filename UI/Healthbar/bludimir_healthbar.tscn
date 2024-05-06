@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://brip6odawqqft"]
+
+[ext_resource type="Texture2D" uid="uid://bockl6x7lifil" path="res://UI/Healthbar/healthbar1.png" id="1_ef4ru"]
+[ext_resource type="Script" path="res://UI/Healthbar/bludimir_healthbar.gd" id="1_ry251"]
+[ext_resource type="Texture2D" uid="uid://6ydnu3c23syi" path="res://UI/Healthbar/healthbar2.png" id="2_7lkai"]
+
+[node name="BludimirHealthbar" type="Node2D"]
+script = ExtResource("1_ry251")
+
+[node name="EmptyBar" type="Sprite2D" parent="."]
+position = Vector2(-10.3125, -0.977026)
+scale = Vector2(3.0625, 1.21264)
+texture = ExtResource("1_ef4ru")
+centered = false
+offset = Vector2(5, 5)
+
+[node name="FullBar" type="Sprite2D" parent="."]
+position = Vector2(30, 7)
+scale = Vector2(3.04688, 1.4)
+texture = ExtResource("2_7lkai")
+centered = false

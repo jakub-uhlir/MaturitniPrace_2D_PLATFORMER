@@ -24,7 +24,9 @@ const player_max_health = 100
 const roll_speed = 1.05
 const roll_duration = 0.3
 const roll_cooldown = 0.1
+
 var can_roll = true
+var can_parry = true
 var parried = false
 var is_dead = false
 var healing_on_cooldown = false
@@ -133,16 +135,19 @@ func player_roll(delta, direction):
 	#print("rolled")
 
 func player_parry(delta: float):
-	if Input.is_action_just_pressed("parry") and is_on_floor():
+	if Input.is_action_just_pressed("parry") and is_on_floor() and can_parry:
 		current_state = State.Parry
+		can_parry = false
 		parrybox.disabled = false
 		animated_sprite_2d.play("Parry")
 		await(get_tree().create_timer(0.4).timeout)
 		parrybox.disabled = true
 		
-		parried = false
+		
 		current_state = State.Idle
-
+		await(get_tree().create_timer(0.3).timeout)
+		can_parry = true
+		
 func _is_dead():
 	if HealthManager.current_health == 0 and !is_dead:
 		is_dead = true
@@ -165,29 +170,36 @@ func player_animations():
 
 
 func _on_hitbox_area_entered(area : Area2D):
-	print("Hit")
+	#print("Hit")
 	var parent = area.get_parent()
 	#print(parent)
 	if area.has_node("hurtboxCollision"):
 		parent.health_Points -= GameController.current_damage
 		print(parent.health_Points)
-
+		
+	#elif area.has_node("HurtboxCollision"):
+		#parent.current_health -= GameController.current_damage
+		
 
 func _on_hitbox_body_entered(body):
-	print("Body entered")
+	#print("Body entered")
+	pass
 
 
 func _on_parrybox_area_entered(area : Area2D):
 	
-	if area.has_node("hitboxCollision"):
+	if area.has_node("hitboxCollision") or area.name.find("Hitbox") != -1:
+		can_parry = true
 		parried = true
 		_parry_effect()
 		parry_sound.play()
-		print("parried")
+		await(get_tree().create_timer(0.45).timeout)
+		parried = false
 		
 
 func _on_hurtbox_area_entered(area : Area2D):
-	if area.has_node("hitboxCollision") and  parried == false:
+	#area.name.find("Hitbox") != -1
+	if area.has_node("hitboxCollision") or area.name.find("Hitbox") != -1 and parried == false:
 		
 		HealthManager.decrease_health(area.get_parent().damage_amount)
 		
@@ -213,7 +225,7 @@ func _parry_effect():
 	var parry_effect_instance = parry_effect.instantiate() as Node2D
 	parry_effect_instance.global_position = parrybox.global_position
 	get_parent().add_child(parry_effect_instance)
-	print(parry_effect_instance.global_position)
+	#print(parry_effect_instance.global_position)
 	#queue_free()
 
 func death_text():

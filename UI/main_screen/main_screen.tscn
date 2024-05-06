@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bcihvm5gywer6"]
 
-[ext_resource type="Script" path="res://UI/main_screen/main_screen.gd" id="1_wayt3"]
-[ext_resource type="Texture2D" uid="uid://cvxbgv7n0o3r7" path="res://UI/mainscreen_background.png" id="1_x4sgy"]
-[ext_resource type="Texture2D" uid="uid://712bai5umeuh" path="res://UI/main_screen/play_button_texture.png" id="3_t5frc"]
-[ext_resource type="Texture2D" uid="uid://cnw0450jm44mt" path="res://UI/main_screen/exit_button_texture.png" id="4_d326u"]
+[ext_resource type="Script" path="res://UI/main_screen/main_screen.gd" id="1_4xrpa"]
+[ext_resource type="Texture2D" uid="uid://cvxbgv7n0o3r7" path="res://UI/mainscreen_background.png" id="2_2pdav"]
+[ext_resource type="Texture2D" uid="uid://712bai5umeuh" path="res://UI/main_screen/play_button_texture.png" id="3_d4box"]
+[ext_resource type="Texture2D" uid="uid://cnw0450jm44mt" path="res://UI/main_screen/exit_button_texture.png" id="4_ulnfn"]
 
 [node name="main_screen" type="Control"]
 layout_mode = 3
@@ -14,7 +14,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_wayt3")
+script = ExtResource("1_4xrpa")
 
 [node name="screen_background" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -30,7 +30,7 @@ offset_right = 192.0
 offset_bottom = 108.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_x4sgy")
+texture = ExtResource("2_2pdav")
 
 [node name="ButtonContainer" type="VBoxContainer" parent="."]
 modulate = Color(0.980392, 0.321569, 0.270588, 0)
@@ -52,12 +52,12 @@ alignment = 1
 [node name="play_button" type="TextureButton" parent="ButtonContainer"]
 layout_mode = 2
 disabled = true
-texture_normal = ExtResource("3_t5frc")
+texture_normal = ExtResource("3_d4box")
 
 [node name="exit_button" type="TextureButton" parent="ButtonContainer"]
 layout_mode = 2
 disabled = true
-texture_normal = ExtResource("4_d326u")
+texture_normal = ExtResource("4_ulnfn")
 
 [connection signal="pressed" from="ButtonContainer/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="ButtonContainer/exit_button" to="." method="_on_exit_button_pressed"]

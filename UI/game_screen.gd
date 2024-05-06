@@ -7,6 +7,7 @@ extends CanvasLayer
 
 @onready var coffin_menu = $CoffinMenu
 @onready var level_up_menu = $LevelUpMenu
+@onready var escape_menu = $EscapeMenu
 
 @onready var level_up_button = $CoffinMenu/VBoxContainer/LevelUpButton
 
@@ -19,6 +20,7 @@ var is_sleeping = false
 
 var current_potion_number : int
 
+var main_screen_scene = preload("res://UI/main_screen/main_screen.tscn")
 
 func _ready():
 	
@@ -34,6 +36,9 @@ func _ready():
 	UiController.button_pressed.connect(on_button_pressed)
 	GameController.souls_counter_changed.connect(on_souls_counter_changed)
 	
+func _physics_process(delta):
+	on_escape_menu_trigger()
+
 func on_player_health_changed(_current_potion_number : int):
 	current_potion_number = _current_potion_number
 	potion_number.text = str(current_potion_number)
@@ -124,4 +129,15 @@ func _on_focus_button_pressed():
 func on_souls_counter_changed(change_number):
 	print("souls changed")
 	souls_counter_number.text = str(GameController.current_souls_held)
+
+func on_escape_menu_trigger():
 	
+	if Input.is_action_just_pressed("EscapeMenu") and escape_menu.visible == false:
+		escape_menu.visible = true
+	elif Input.is_action_just_pressed("EscapeMenu") and escape_menu.visible == true:
+		escape_menu.visible = false
+
+
+func _on_return_to_menu_button_pressed():
+	UiController.return_to_menu_pressed.emit()
+	SceneSwitcher.switch_scene("res://UI/main_screen/main_screen.tscn")

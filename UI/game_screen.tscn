@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dt4l3holt2grc"]
+[gd_scene load_steps=16 format=3 uid="uid://dt4l3holt2grc"]
 
 [ext_resource type="PackedScene" uid="uid://cjxuwmchi7ws8" path="res://UI/Healthbar/health_bar.tscn" id="1_l2t0k"]
 [ext_resource type="Script" path="res://UI/game_screen.gd" id="1_t18mr"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://cadon63xw78ju" path="res://UI/Coffin/hp_buttob_ui.png" id="11_im1ly"]
 [ext_resource type="Texture2D" uid="uid://bta8opebsppwm" path="res://UI/Coffin/focus_button_texture.png" id="12_eegxg"]
 [ext_resource type="Texture2D" uid="uid://dqowxmub3gduo" path="res://UI/souls_counter_background.png" id="13_pslik"]
+[ext_resource type="Texture2D" uid="uid://1u1x0cps3ev2" path="res://UI/main_screen/return_to_menu_button_texture.png" id="14_tlgv5"]
+[ext_resource type="PackedScene" uid="uid://brip6odawqqft" path="res://UI/Healthbar/bludimir_healthbar.tscn" id="15_j6cy4"]
 
 [node name="GameScreen" type="CanvasLayer"]
 script = ExtResource("1_t18mr")
@@ -184,9 +186,38 @@ offset_left = 5.0
 offset_right = 51.0
 offset_bottom = 23.0
 
+[node name="EscapeMenu" type="NinePatchRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = -32.5
+offset_right = 32.5
+offset_bottom = 32.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_polsy")
+
+[node name="ReturnToMenuButton" type="TextureButton" parent="EscapeMenu"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 12.0
+offset_right = 55.0
+offset_bottom = 19.0
+texture_normal = ExtResource("14_tlgv5")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="BludimirHealthbar" parent="." instance=ExtResource("15_j6cy4")]
+position = Vector2(57, 190)
+
 [connection signal="pressed" from="CoffinMenu/VBoxContainer/LevelUpButton" to="." method="_on_level_up_button_pressed"]
 [connection signal="pressed" from="CoffinMenu/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ExitButton2" to="." method="_on_exit_button_2_pressed"]
 [connection signal="pressed" from="LevelUpMenu/StrengthButton" to="." method="_on_strength_button_pressed"]
 [connection signal="pressed" from="LevelUpMenu/HpButton" to="." method="_on_hp_button_pressed"]
 [connection signal="pressed" from="LevelUpMenu/FocusButton" to="." method="_on_focus_button_pressed"]
+[connection signal="pressed" from="EscapeMenu/ReturnToMenuButton" to="." method="_on_return_to_menu_button_pressed"]
