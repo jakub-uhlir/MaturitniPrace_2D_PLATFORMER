@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bcihvm5gywer6"]
+[gd_scene load_steps=6 format=3 uid="uid://bcihvm5gywer6"]
 
 [ext_resource type="Script" path="res://UI/main_screen/main_screen.gd" id="1_4xrpa"]
 [ext_resource type="Texture2D" uid="uid://cvxbgv7n0o3r7" path="res://UI/mainscreen_background.png" id="2_2pdav"]
 [ext_resource type="Texture2D" uid="uid://712bai5umeuh" path="res://UI/main_screen/play_button_texture.png" id="3_d4box"]
 [ext_resource type="Texture2D" uid="uid://cnw0450jm44mt" path="res://UI/main_screen/exit_button_texture.png" id="4_ulnfn"]
+[ext_resource type="AudioStream" uid="uid://djjxoml0rydcn" path="res://sound_effects/yamaha-cs01-slowed.mp3" id="5_3ixb1"]
 
 [node name="main_screen" type="Control"]
 layout_mode = 3
@@ -58,6 +59,10 @@ texture_normal = ExtResource("3_d4box")
 layout_mode = 2
 disabled = true
 texture_normal = ExtResource("4_ulnfn")
+
+[node name="MainScreenThemePlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_3ixb1")
+volume_db = -16.701
 
 [connection signal="pressed" from="ButtonContainer/play_button" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="ButtonContainer/exit_button" to="." method="_on_exit_button_pressed"]

@@ -19,3 +19,11 @@ position = Vector2(30, 7)
 scale = Vector2(3.04688, 1.4)
 texture = ExtResource("2_7lkai")
 centered = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 64.0
+offset_top = -8.0
+offset_right = 191.0
+offset_bottom = 6.0
+theme_override_font_sizes/normal_font_size = 10
+text = "Bludimir, The great rizzler"

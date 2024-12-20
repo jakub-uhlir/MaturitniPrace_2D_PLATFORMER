@@ -9,3 +9,5 @@ signal _exit_button_pressed
 signal bludimir_health_decreased
 
 signal return_to_menu_pressed
+
+signal chest_opened

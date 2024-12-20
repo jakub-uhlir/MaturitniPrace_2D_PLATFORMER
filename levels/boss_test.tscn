@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://grlfu454gjsg" path="res://tilesets/gothicvania church files/ENVIRONMENT/tileset.png" id="1_273eo"]
 [ext_resource type="PackedScene" uid="uid://d1mymcclfoaq6" path="res://player/player.tscn" id="2_ckcig"]
-[ext_resource type="PackedScene" uid="uid://b167iqs24fmfb" path="res://enemies/BludimirBoss/bludimir_boss.tscn" id="3_2w42u"]
+[ext_resource type="PackedScene" uid="uid://c83dia1vceb16" path="res://enemies/skeleton_enemy.tscn" id="4_43568"]
 [ext_resource type="PackedScene" uid="uid://dt4l3holt2grc" path="res://UI/game_screen.tscn" id="4_ixyei"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ah4km"]
@@ -341,10 +341,11 @@ layer_0/tile_data = PackedInt32Array(65537, 65536, 10, 393216, 0, 10, 458752, 0,
 [node name="player" parent="." instance=ExtResource("2_ckcig")]
 position = Vector2(20, 106)
 
-[node name="Camera2D" type="Camera2D" parent="player"]
+[node name="Camera2D2" type="Camera2D" parent="player"]
 position = Vector2(86, 3)
 
-[node name="BludimirBoss" parent="." instance=ExtResource("3_2w42u")]
-position = Vector2(409, 104)
-
 [node name="GameScreen" parent="." instance=ExtResource("4_ixyei")]
+visible = false
+
+[node name="skeletonEnemy" parent="." instance=ExtResource("4_43568")]
+position = Vector2(264, 110)

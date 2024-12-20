@@ -350,6 +350,7 @@ frame = 5
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-2, -19)
 shape = SubResource("CapsuleShape2D_dnyh3")
 
@@ -358,6 +359,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="hurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
+visible = false
 position = Vector2(-2, -19)
 shape = SubResource("CapsuleShape2D_efg0p")
 debug_color = Color(0.776471, 0.0352941, 0.454902, 0.419608)
@@ -367,6 +369,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="hitboxCollision" type="CollisionShape2D" parent="Hitbox"]
+visible = false
 position = Vector2(21, -20)
 shape = SubResource("RectangleShape2D_m7a5b")
 disabled = true
@@ -377,6 +380,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="detectCollision" type="CollisionShape2D" parent="DetectArea"]
+visible = false
 position = Vector2(128, -40)
 shape = SubResource("RectangleShape2D_7r6gq")
 
@@ -386,6 +390,7 @@ collision_mask = 2
 monitoring = false
 
 [node name="aggroCollision" type="CollisionShape2D" parent="AggroArea"]
+visible = false
 position = Vector2(-2, -19)
 shape = SubResource("CircleShape2D_kfwv7")
 debug_color = Color(0.498039, 0.431373, 1, 0.419608)

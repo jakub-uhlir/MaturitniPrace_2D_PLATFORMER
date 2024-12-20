@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=3 uid="uid://d1mymcclfoaq6"]
+[gd_scene load_steps=82 format=3 uid="uid://d1mymcclfoaq6"]
 
 [ext_resource type="Texture2D" uid="uid://cduhkrausl53s" path="res://player/120x80_PNGSheets/_Attack.png" id="1_6k5a1"]
 [ext_resource type="Script" path="res://player/player.gd" id="1_7obb2"]
@@ -519,11 +519,14 @@ height = 40.0
 size = Vector2(34, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sgfex"]
-size = Vector2(27, 30)
+size = Vector2(27, 40)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h6b7g"]
 radius = 14.0
 height = 40.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ups52"]
+size = Vector2(150, 49)
 
 [node name="player" type="CharacterBody2D"]
 collision_layer = 2
@@ -537,8 +540,11 @@ position = Vector2(4, -40)
 sprite_frames = SubResource("SpriteFrames_efvp1")
 animation = &"Attack2"
 autoplay = "Idle"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -20)
 shape = SubResource("CapsuleShape2D_cyt13")
 debug_color = Color(0.372549, 0.482353, 0.984314, 0.419608)
@@ -548,6 +554,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="hitboxCollision" type="CollisionShape2D" parent="Hitbox"]
+visible = false
 position = Vector2(21, -17)
 shape = SubResource("RectangleShape2D_tow42")
 disabled = true
@@ -558,7 +565,8 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="parryCollision" type="CollisionShape2D" parent="Parrybox"]
-position = Vector2(16.5, -21)
+z_index = 1
+position = Vector2(16.5, -20)
 shape = SubResource("RectangleShape2D_sgfex")
 disabled = true
 debug_color = Color(0.854902, 0.694118, 0.0235294, 0.419608)
@@ -568,7 +576,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="hurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, -20)
+position = Vector2(0, -19)
 shape = SubResource("CapsuleShape2D_h6b7g")
 debug_color = Color(0.823529, 0.160784, 0.447059, 0.419608)
 
@@ -581,8 +589,23 @@ pitch_scale = 0.99
 wait_time = 0.3
 one_shot = true
 
+[node name="EnemyDetect" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="EnemyDetectCollision" type="CollisionShape2D" parent="EnemyDetect"]
+visible = false
+position = Vector2(0, -25)
+shape = SubResource("RectangleShape2D_ups52")
+debug_color = Color(0.168627, 0.607843, 0.592157, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1, -53)
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="area_entered" from="Parrybox" to="." method="_on_parrybox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="area_entered" from="EnemyDetect" to="." method="_on_enemy_detect_area_entered"]
+[connection signal="area_exited" from="EnemyDetect" to="." method="_on_enemy_detect_area_exited"]

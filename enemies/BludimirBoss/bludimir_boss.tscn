@@ -1,7 +1,8 @@
-[gd_scene load_steps=88 format=3 uid="uid://b167iqs24fmfb"]
+[gd_scene load_steps=89 format=3 uid="uid://b167iqs24fmfb"]
 
 [ext_resource type="Texture2D" uid="uid://bfyik6or7hpyy" path="res://enemies/BludimirBoss/Elementals_fire_knight_FREE_v1.1/spritesheets/fire_FREE_SpriteSheet_288x128.png" id="1_6o31k"]
 [ext_resource type="Script" path="res://enemies/BludimirBoss/bludimir_boss.gd" id="1_bkf8a"]
+[ext_resource type="AudioStream" uid="uid://de71v01w4jors" path="res://sound_effects/main-theme.mp3" id="3_36ohe"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e63hh"]
 height = 44.0
@@ -617,7 +618,7 @@ collision_layer = 4
 script = ExtResource("1_bkf8a")
 
 [node name="GroundCollision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -22)
+position = Vector2(0, -20)
 shape = SubResource("CapsuleShape2D_e63hh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -682,6 +683,10 @@ position = Vector2(61, -30)
 shape = SubResource("RectangleShape2D_pq7pm")
 disabled = true
 debug_color = Color(0.537255, 0.411765, 0.992157, 0.419608)
+
+[node name="SoundtrackPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_36ohe")
+volume_db = -13.317
 
 [connection signal="timeout" from="HitboxTimer" to="." method="_on_hitbox_timer_timeout"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

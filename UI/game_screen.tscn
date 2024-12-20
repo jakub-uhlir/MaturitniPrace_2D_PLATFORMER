@@ -1,13 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://dt4l3holt2grc"]
+[gd_scene load_steps=19 format=3 uid="uid://dt4l3holt2grc"]
 
 [ext_resource type="PackedScene" uid="uid://cjxuwmchi7ws8" path="res://UI/Healthbar/health_bar.tscn" id="1_l2t0k"]
 [ext_resource type="Script" path="res://UI/game_screen.gd" id="1_t18mr"]
 [ext_resource type="PackedScene" uid="uid://lh0htqe7uiok" path="res://UI/potion.tscn" id="2_e673l"]
 [ext_resource type="PackedScene" uid="uid://dklflujlnaka3" path="res://textures/you_died.tscn" id="4_h7q65"]
 [ext_resource type="Texture2D" uid="uid://iu0kv6mvsevo" path="res://UI/Coffin/background_ui.png" id="5_polsy"]
-[ext_resource type="Texture2D" uid="uid://dhkfcvd3fodpu" path="res://UI/Coffin/button_ui.png" id="6_cqauo"]
 [ext_resource type="Texture2D" uid="uid://c3yon3toda3c7" path="res://UI/Coffin/level_button_ui.png" id="6_fgh1g"]
 [ext_resource type="Texture2D" uid="uid://cmkq1h4hyo4yi" path="res://UI/Coffin/teleport_button_ui.png" id="7_1scgf"]
+[ext_resource type="Texture2D" uid="uid://ge3fbasn7xy8" path="res://UI/Coffin/potion_plus.png" id="8_6ye6w"]
 [ext_resource type="Texture2D" uid="uid://deef34uw7plls" path="res://UI/Coffin/exit_button_ui.png" id="9_gccla"]
 [ext_resource type="Texture2D" uid="uid://cpjxfihqakhxp" path="res://UI/Coffin/strength_button.png" id="10_g0yp2"]
 [ext_resource type="Texture2D" uid="uid://cadon63xw78ju" path="res://UI/Coffin/hp_buttob_ui.png" id="11_im1ly"]
@@ -15,6 +15,16 @@
 [ext_resource type="Texture2D" uid="uid://dqowxmub3gduo" path="res://UI/souls_counter_background.png" id="13_pslik"]
 [ext_resource type="Texture2D" uid="uid://1u1x0cps3ev2" path="res://UI/main_screen/return_to_menu_button_texture.png" id="14_tlgv5"]
 [ext_resource type="PackedScene" uid="uid://brip6odawqqft" path="res://UI/Healthbar/bludimir_healthbar.tscn" id="15_j6cy4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rtk7c"]
+font_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_ykmk7"]
+font_size = 11
+
+[sub_resource type="LabelSettings" id="LabelSettings_bgpgp"]
+line_spacing = 10.0
+font_size = 9
 
 [node name="GameScreen" type="CanvasLayer"]
 script = ExtResource("1_t18mr")
@@ -85,7 +95,7 @@ texture_normal = ExtResource("7_1scgf")
 
 [node name="TextureButton" type="TextureButton" parent="CoffinMenu/VBoxContainer"]
 layout_mode = 2
-texture_normal = ExtResource("6_cqauo")
+texture_normal = ExtResource("8_6ye6w")
 stretch_mode = 0
 
 [node name="ExitButton" type="TextureButton" parent="CoffinMenu"]
@@ -183,8 +193,10 @@ texture = ExtResource("13_pslik")
 [node name="SoulsCounterNumber" type="Label" parent="SoulsCounterBackground"]
 layout_mode = 0
 offset_left = 5.0
+offset_top = 2.0
 offset_right = 51.0
-offset_bottom = 23.0
+offset_bottom = 22.0
+label_settings = SubResource("LabelSettings_rtk7c")
 
 [node name="EscapeMenu" type="NinePatchRect" parent="."]
 visible = false
@@ -212,12 +224,70 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="BludimirHealthbar" parent="." instance=ExtResource("15_j6cy4")]
+visible = false
 position = Vector2(57, 190)
 
+[node name="PotionShardObtained" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -17.0
+offset_right = 69.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "[obtained potion shard]"
+label_settings = SubResource("LabelSettings_ykmk7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tutorial" type="NinePatchRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.54
+offset_top = -61.0
+offset_right = 81.54
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_polsy")
+
+[node name="Label" type="Label" parent="Tutorial"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 15.0
+offset_right = 156.0
+offset_bottom = 79.0
+text = "Use arrows to move
+Press F to deflect enemy attacks
+Press X to attack
+Press R to use heal"
+label_settings = SubResource("LabelSettings_bgpgp")
+
+[node name="TutorialExitButton" type="TextureButton" parent="Tutorial"]
+layout_mode = 0
+offset_left = 144.54
+offset_top = 2.0
+offset_right = 159.54
+offset_bottom = 17.0
+texture_normal = ExtResource("9_gccla")
+ignore_texture_size = true
+stretch_mode = 0
+
 [connection signal="pressed" from="CoffinMenu/VBoxContainer/LevelUpButton" to="." method="_on_level_up_button_pressed"]
+[connection signal="pressed" from="CoffinMenu/VBoxContainer/TextureButton" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="CoffinMenu/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="LevelUpMenu/ExitButton2" to="." method="_on_exit_button_2_pressed"]
 [connection signal="pressed" from="LevelUpMenu/StrengthButton" to="." method="_on_strength_button_pressed"]
 [connection signal="pressed" from="LevelUpMenu/HpButton" to="." method="_on_hp_button_pressed"]
 [connection signal="pressed" from="LevelUpMenu/FocusButton" to="." method="_on_focus_button_pressed"]
 [connection signal="pressed" from="EscapeMenu/ReturnToMenuButton" to="." method="_on_return_to_menu_button_pressed"]
+[connection signal="pressed" from="Tutorial/TutorialExitButton" to="." method="_on_tutorial_exit_button_pressed"]

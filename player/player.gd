@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var parry_sound = $ParrySound
 @onready var player = $"."
 @onready var attack_timer = $AttackTimer
+@onready var camera = $Camera2D
 
 var parry_effect = preload("res://effects/parry_effect.tscn")
 var _death_text = preload("res://textures/died_text.png")
@@ -10,13 +11,13 @@ var _death_text = preload("res://textures/died_text.png")
 @export var player_health : int
 
 const GRAVITY = 2000
-const SPEED = 1000
-@export var max_horizontal_speed: int = 300
+const SPEED = 500
+@export var max_horizontal_speed: int = 200
 @export var slow_down_speed : int = 10000
 @onready var hitbox = $Hitbox/hitboxCollision
 @onready var parrybox = $Parrybox/parryCollision
 @onready var hurtbox = $Hurtbox/hurtboxCollision
-const jump_speed = -430
+var jump_speed = -560
 const jump_horizontal_speed = 1000
 @export var max_jump_horizontal_speed: int = 300
 
@@ -50,9 +51,9 @@ func _physics_process(delta): #step event (60 fps)
 			player_attack(delta)
 			player_parry(delta)
 			move_and_slide()
-		if current_state == State.Roll:
-			player_roll(delta, direction)
-			move_and_slide()
+		#if current_state == State.Roll:
+			#player_roll(delta, direction)
+			#move_and_slide()
 		
 		if current_state == State.aerialAttack:
 			player_falling(delta)
@@ -63,14 +64,6 @@ func _physics_process(delta): #step event (60 fps)
 			player_jump(delta)
 			move_and_slide()
 	
-		if Input.is_action_just_pressed("roll") and can_roll and direction !=0:
-			#print("roll pressed")
-			current_state = State.Roll
-			can_roll = false;
-			await(get_tree().create_timer(roll_duration).timeout)
-			current_state = State.Idle
-			can_roll = true
-		
 		player_animations()
 	
 	
@@ -96,9 +89,15 @@ func player_run(delta):
 		#print("running")
 		animated_sprite_2d.flip_h = false if  direction > 0 else true
 		if animated_sprite_2d.flip_h == true:
+			var tween = get_tree().create_tween()
+			#tween.tween_property(camera, "position",Vector2(-89,camera.position.y),0.3)
+			#camera.position.x = -89
 			hitbox.position.x = -21
 			parrybox.position.x = -13
 		else:
+			var tween = get_tree().create_tween()
+			#tween.tween_property(camera, "position",Vector2(89,camera.position.y),0.3)
+			#camera.position.x = 89
 			hitbox.position.x = 21
 			parrybox.position.x = 13
 			
@@ -121,7 +120,7 @@ func player_attack(delta):
 		can_roll = false
 		
 		await(animated_sprite_2d.animation_finished)  
-		await(get_tree().create_timer(0.2).timeout)
+		await(get_tree().create_timer(0.05).timeout)
 		
 		current_state = State.Idle  
 		if current_state != State.Roll:
@@ -151,6 +150,7 @@ func player_parry(delta: float):
 func _is_dead():
 	if HealthManager.current_health == 0 and !is_dead:
 		is_dead = true
+		#GameController.player_died.emit(player)
 		hurtbox.disabled = true
 		animated_sprite_2d.play("Death")
 		await(animated_sprite_2d.animation_finished)
@@ -188,7 +188,7 @@ func _on_hitbox_body_entered(body):
 
 func _on_parrybox_area_entered(area : Area2D):
 	
-	if area.has_node("hitboxCollision") or area.name.find("Hitbox") != -1:
+	if  area.name.find("Hitbox") != -1:
 		can_parry = true
 		parried = true
 		_parry_effect()
@@ -199,7 +199,7 @@ func _on_parrybox_area_entered(area : Area2D):
 
 func _on_hurtbox_area_entered(area : Area2D):
 	#area.name.find("Hitbox") != -1
-	if area.has_node("hitboxCollision") or area.name.find("Hitbox") != -1 and parried == false:
+	if area.name.find("Hitbox") != -1 and parried == false: 
 		
 		HealthManager.decrease_health(area.get_parent().damage_amount)
 		
@@ -254,3 +254,14 @@ func _on_attack_timer_timeout():
 	hitbox.disabled = false
 	await(get_tree().create_timer(0.2).timeout)
 	hitbox.disabled = true
+
+
+func _on_enemy_detect_area_entered(area: Area2D):
+	if area.has_node("hurtboxCollision") or area.has_node("HurtboxCollision"):
+		jump_speed = -100
+
+
+func _on_enemy_detect_area_exited(area: Area2D):
+	if area.has_node("hurtboxCollision") or area.has_node("HurtboxCollision"):
+		
+		jump_speed = -560

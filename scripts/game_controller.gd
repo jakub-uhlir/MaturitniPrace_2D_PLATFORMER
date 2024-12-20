@@ -16,15 +16,20 @@ var enemy_instance = null
 var current_souls_held = 0
 
 var last_coffin_slept_position : Vector2
+var current_potion_shards : int
+
 
 signal souls_counter_changed
 signal player_died
 signal game_started
+signal bludimir_died
 
 var save_path = "user://variable.save"
 
 var player
 var loaded = false
+
+var is_bludimir_dead = false
 
 
 func _ready():
@@ -92,6 +97,7 @@ func on_exit_button_pressed():
 	player.current_state = player.State.Idle
 
 func on_player_died(player):
+	
 	player.is_dead = false
 	GameController.souls_counter_changed.emit(-1)
 	HealthManager.increase_health(HealthManager.max_health)
@@ -102,8 +108,18 @@ func on_player_died(player):
 	
 	var root_node = get_tree().root
 	var level_node = root_node.get_node("Level")
+	var bludimir_boss = level_node.get_node("BludimirBoss")
 	var enemies = level_node.get_node("Enemies").get_children()
+	
+	if is_bludimir_dead == false:
+		
+		bludimir_boss.position = bludimir_boss.initial_position
+		bludimir_boss.current_health = bludimir_boss.max_health
+		bludimir_boss.current_state = bludimir_boss.State.Idle
+	
 	if enemies:
+		
+		
 		for enemy in enemies:
 			enemy.global_position = enemy.initial_position
 			enemy.health_Points = enemy.max_health

@@ -4,11 +4,12 @@ extends Control
 @onready var button_container = $ButtonContainer
 @onready var play_button = $ButtonContainer/play_button
 @onready var exit_button = $ButtonContainer/exit_button
-
+@onready var main_screen_theme_player = $MainScreenThemePlayer
 
 
 func _ready():
 	var tween = get_tree().create_tween()
+	main_screen_theme_player.play()
 	tween.tween_property(screen_background,"modulate",Color(1,1,1,1),3)
 	tween.tween_property(button_container,"modulate",Color(0.98,0.32,0.27,1),2)
 

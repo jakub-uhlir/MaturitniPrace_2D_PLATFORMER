@@ -4,8 +4,9 @@ extends CharacterBody2D
 @onready var boss_body = $"."
 @onready var hitbox_timer = $HitboxTimer
 @onready var combo_timer = $ComboTimer
+@onready var soundtrack_player = $SoundtrackPlayer
 
-
+var initial_position
 
 #RANDOM VARIABLES -->
 var random = RandomNumberGenerator.new()
@@ -31,6 +32,7 @@ var current_state
 #HEALTH VARIABLES -->
 var max_health = 500
 var current_health : float
+var is_dead : bool
 
 #COMBAT VARIABLES -->
 var is_attacking = false
@@ -39,18 +41,23 @@ var damage_amount : int
 
 func _ready():
 	
+	
+	initial_position = position
 	current_health = max_health
-	player_character = get_tree().root.get_node("boss_test").get_node("player")
-	current_state = State.Attacking
-
+	player_character = get_tree().root.get_node("Level").get_node("player")
+	current_state = State.Idle
+	
 func _physics_process(delta):
 	
-	if current_state == State.Attacking:
-		attack(delta)
+	_is_dead()
 	
-	if current_state == State.Idle:
+	if !GameController.is_bludimir_dead:
+		if current_state == State.Attacking:
+			attack(delta)
+	
+		if current_state == State.Idle:
 		
-		animated_sprite_2d.play("Idle")
+			animated_sprite_2d.play("Idle")
 
 
 func walk():
@@ -150,7 +157,7 @@ func attack_combination_one():
 			
 			await(get_tree().create_timer(0.7).timeout)
 			hitbox3_collision.disabled = true
-			await(get_tree().create_timer(1.2).timeout)
+			await(get_tree().create_timer(1.8).timeout)
 			
 			is_attacking = false
 			on_cooldown = false
@@ -219,7 +226,7 @@ func attack_combination_two():
 				
 				await(get_tree().create_timer(0.7).timeout)
 				hitbox2_collision.disabled = true
-				await(get_tree().create_timer(1.2).timeout)
+				await(get_tree().create_timer(1.8).timeout)
 				
 				is_attacking = false
 				on_cooldown = false
@@ -307,7 +314,7 @@ func attack_combination_three():
 					
 					await(get_tree().create_timer(0.8).timeout)
 					hitbox3_collision.disabled = true
-					await(get_tree().create_timer(1.2).timeout)
+					await(get_tree().create_timer(1.8).timeout)
 					
 					is_attacking = false
 					on_cooldown = false
@@ -373,7 +380,7 @@ func attack_combination_four():
 			
 			await(get_tree().create_timer(0.7).timeout)
 			hitbox1_collision.disabled = true
-			await(get_tree().create_timer(1.2).timeout)
+			await(get_tree().create_timer(1.8).timeout)
 			
 			is_attacking = false
 			on_cooldown = false
@@ -428,7 +435,7 @@ func attack_combination_five():
 			
 			await(get_tree().create_timer(1.65).timeout)
 			sphitbox_collision.disabled = true
-			await(get_tree().create_timer(1.2).timeout)
+			await(get_tree().create_timer(1.8).timeout)
 			
 			is_attacking = false
 			on_cooldown = false
@@ -464,3 +471,15 @@ func _on_hurtbox_area_entered(area : Area2D):
 		current_health -= GameController.current_damage
 		print(current_health)
 		UiController.bludimir_health_decreased.emit(current_health)
+
+
+func _is_dead():
+	
+	if current_health < 0 and !GameController.is_bludimir_dead:
+		
+		GameController.souls_counter_changed.emit(5000)
+		GameController.is_bludimir_dead = true
+		animated_sprite_2d.play("Death")
+		await(animated_sprite_2d.animation_finished)
+		if boss_body:
+			queue_free()

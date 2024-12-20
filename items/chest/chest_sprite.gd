@@ -17,8 +17,12 @@ func _on_detect_area_area_exited(area):
 
 
 func _on_open_button_pressed():
+	
+	
 	opened = true
 	open_button.visible = false
 	anim_sprite.play("Openening")
+	UiController.chest_opened.emit()
+	GameController.current_potion_shards += 1 
 	
 	
